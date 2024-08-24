@@ -4,55 +4,61 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { router } from "expo-router";
 import Swiper from "react-native-swiper";
 import { onboarding } from "@/constants";
-import CustomBtn from "@/components/CustomBtn";
+import CustomButton from "@/components/CustomBtn";
 
 const Welcom = () => {
   const swipeRef = useRef<Swiper | null>(null);
   const [indexSwiper, setIndexSwiper] = useState(0);
   const islastSlide = indexSwiper === onboarding.length - 1;
   return (
-    <SafeAreaView className=" justify-between items-center flex bg-white h-full">
+    <SafeAreaView className="flex h-full items-center justify-between bg-white">
       <TouchableOpacity
-        className=" justify-end items-end w-full p-5"
-        onPress={() => router.replace("/(auth)/sign-up")}
+        onPress={() => {
+          router.replace("/(auth)/sign-up");
+        }}
+        className="w-full flex justify-end items-end p-5"
       >
-        <Text className=" text-md text-black font-JakartaBold">Skip</Text>
+        <Text className="text-black text-md font-JakartaBold">Skip</Text>
       </TouchableOpacity>
+
       <Swiper
-        onIndexChanged={(index) => setIndexSwiper(index)}
         ref={swipeRef}
         loop={false}
-        dot={<View className="w-[32px] rounded-full h-1 mx-1 bg-[#E2E8F0]" />}
-        activeDot={
-          <View className="w-[32px] rounded-full h-1 mx-1 bg-[#0286FF]" />
+        dot={
+          <View className="w-[32px] h-[4px] mx-1 bg-[#E2E8F0] rounded-full" />
         }
+        activeDot={
+          <View className="w-[32px] h-[4px] mx-1 bg-[#0286FF] rounded-full" />
+        }
+        onIndexChanged={(index) => setIndexSwiper(index)}
       >
-        {onboarding.map((item, index) => (
-          <View className=" flex justify-center p-5 items-center" key={index}>
+        {onboarding.map((item) => (
+          <View key={item.id} className="flex items-center justify-center p-5">
             <Image
-              className=" w-full h-[300px]"
-              resizeMode="contain"
               source={item.image}
+              className="w-full h-[300px]"
+              resizeMode="contain"
             />
-            <View className="flex flex-col w-full mt-10 justify-center items-center">
-              <Text className=" text-3xl font-bold mx-10 text-black text-center">
+            <View className="flex flex-row items-center justify-center w-full mt-10">
+              <Text className="text-black text-3xl font-bold mx-10 text-center">
                 {item.title}
               </Text>
             </View>
-            <Text className=" text-lg font-JakartaSemiBold mx-10 mt-3 text-center text-[#858585]">
+            <Text className="text-md font-JakartaSemiBold text-center text-[#858585] mx-10 mt-3">
               {item.description}
             </Text>
           </View>
         ))}
       </Swiper>
-      <CustomBtn
+
+      <CustomButton
+        title={islastSlide ? "Get Started" : "Next"}
         onPress={() =>
           islastSlide
             ? router.replace("/(auth)/sign-up")
             : swipeRef.current?.scrollBy(1)
         }
-        className={"11/12 mt-10"}
-        title={islastSlide ? "Get Started" : "Next"}
+        className="w-11/12 mt-10 mb-5"
       />
     </SafeAreaView>
   );

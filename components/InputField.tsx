@@ -20,6 +20,7 @@ const InputField = ({
   inputStyle,
   iconStyle,
   className,
+  onChangeText,
   ...props
 }: InputFieldProps) => {
   return (
@@ -32,15 +33,16 @@ const InputField = ({
             {label}
           </Text>
           <View
-            className={`flex flex-row justify-start items-center relative bg-neutral-100 border-neutral-100 rounded-full focus:border-primary-500 ${containerStyle}`}
+            className={`flex flex-row gap-2 justify-start items-center relative bg-neutral-100 border-neutral-100 rounded-full focus:border-primary-500 ${containerStyle}`}
           >
             {icon && (
               <Image source={icon} className={` w-6 h-6 ml-4 ${iconStyle}`} />
             )}
             <TextInput
+              onChangeText={onChangeText}
               secureTextEntry={secureTextEntry}
               {...props}
-              className={` rounded-full p-4 font-JakartaSemiBold text-[15px] text-left ${inputStyle}`}
+              className={` rounded-full py-4 font-JakartaSemiBold text-[15px] text-left ${inputStyle}`}
             />
           </View>
         </View>
